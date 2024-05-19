@@ -7,6 +7,9 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.11.1/dist/full.min.css" rel="stylesheet" type="text/css" />
 <script src="https://cdn.tailwindcss.com"></script>
+<style>
+  .hidden { display: none; }
+</style>
 
 </head>
 <body class="bg-gray-100 ">
@@ -125,7 +128,33 @@
                     
                        
                         <li><a href="#" class="link" data-target="managing-committee">Managing Committee</a></li>
-                        <li><a href="#" class="link" data-target="teachers-list">Teachers List</a></li>
+                        <li><a href="#" class="link" data-target="teachers-list" onclick="showTeachersList()">Teachers List</a>
+                          <div class="container mx-auto p-4">
+                            
+                            
+                            <div id="teachers-list" class="hidden">
+                                <h1 class="text-2xl font-bold mb-4">Teachers List</h1>
+                                <input type="text" id="search" onkeyup="searchTeachers()" placeholder="Search for names.." class="input input-bordered w-full mb-4">
+                                <div class="overflow-x-auto">
+                                    <table class="table w-full" id="teachersTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Designation</th>
+                                                <th>Joining Date</th>
+                                                <th>Phone</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Teacher rows will be inserted here by JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div
+                        
+                        
+                        </li>
                         <li><a href="#" class="link" data-target="staff-list">Staff List</a></li>
                         <li><a href="#" class="link" data-target="institute-infrastructure">Institute Infrastructure</a></li>
                         <li><a href="#" class="link" data-target="mission-vision">Mission & Vision</a></li>
@@ -255,6 +284,72 @@
             modal.classList.add('hidden');
         }
     });
+
+
+
+    // about teacher
+const teachers = [
+    { name: "MD MAMUN UDDIN", designation: "ASSISTANT TEACHER", joining_date: "2023-09-01", phone: "01839711804" },
+    { name: "SALEH AHMED", designation: "HEAD MASTER", joining_date: "2000-01-01", phone: "01718084205" },
+    { name: "MOHAMMED MOFIZUL ISLAM", designation: "ASSISTANT HEAD MASTER", joining_date: "2000-01-01", phone: "01815717160" },
+    { name: "MD RUHUL AMIN", designation: "SENIOR TEACHER", joining_date: "2000-01-01", phone: "01718853280" },
+    { name: "FARZANA BEGUM", designation: "SENIOR TEACHER", joining_date: "2000-01-01", phone: "01711375661" },
+    { name: "TASLIMA AKTER", designation: "SENIOR TEACHER", joining_date: "2023-09-01", phone: "01812740492" },
+    { name: "HASINA AKTER", designation: "SENIOR TEACHER", joining_date: "2023-09-01", phone: "01812941030" },
+    { name: "MD HARUNUR RASHID", designation: "SENIOR TEACHER", joining_date: "2023-09-01", phone: "01918967131" },
+    { name: "A.N.M YEASIN", designation: "SENIOR TEACHER", joining_date: "2023-09-01", phone: "01818966897" },
+    { name: "NURUL HUDA", designation: "ASSISTANT TEACHER", joining_date: "2023-09-01", phone: "01817222453" },
+    { name: "MOHAMMAD ZABED IQBAL", designation: "SENIOR TEACHER", joining_date: "2023-09-01", phone: "01811169147" },
+    { name: "MD HARUN OR RASHID", designation: "SENIOR TEACHER", joining_date: "2023-09-01", phone: "01718855771" },
+    { name: "PARVIN AKTER", designation: "SENIOR TEACHER", joining_date: "2023-09-01", phone: "01838633146" },
+    { name: "PARTHA SARATHI MAZUMDER", designation: "ASSISTANT TEACHER", joining_date: "2023-09-01", phone: "01717573062" },
+    { name: "ANCHANA RANI SHIL", designation: "SENIOR TEACHER", joining_date: "2023-09-01", phone: "01720698833" },
+    { name: "AHAMMAD ULLAH BHUIYAN", designation: "SENIOR TEACHER", joining_date: "2023-09-01", phone: "01920541169" },
+    { name: "MD TAJMUL HUDA", designation: "ASSISTANT TEACHER", joining_date: "2023-09-01", phone: "01816879595" },
+    { name: "CHANDANI RANI BORDHAN", designation: "SENIOR TEACHER", joining_date: "2023-09-01", phone: "01732639559" },
+    { name: "SHYAM LAL DAS", designation: "SENIOR TEACHER", joining_date: "2023-09-01", phone: "01830602490" },
+    { name: "SHAHENA AKTER", designation: "SENIOR TEACHER", joining_date: "2023-09-01", phone: "01884027800" },
+    { name: "MD ABBAS UDDIN", designation: "ASSISTANT TEACHER", joining_date: "2023-09-01", phone: "01732285754" },
+    { name: "MOHAMMAD MAHMUDUL HASAN", designation: "SENIOR TEACHER", joining_date: "2023-09-01", phone: "01731272872" },
+    { name: "MUHAMMAD SHIHAB UDDIN", designation: "ASSISTANT TEACHER", joining_date: "2023-09-01", phone: "01303245711" },
+    { name: "SAJEDA AKTHER", designation: "ASSISTANT TEACHER ICT", joining_date: "2023-09-01", phone: "01872357256" },
+    { name: "MONIR AHAMMAD", designation: "OFFICE ASSISTANT", joining_date: "2023-09-01", phone: "01715321715" },
+    { name: "JAMAL UDDIN TAREK", designation: "COMPUTER LAB OPERATOR", joining_date: "2023-09-01", phone: "01829695093" }
+];
+
+function showTeachersList() {
+    document.getElementById("teachers-list").classList.toggle("hidden");
+
+    const tableBody = document.querySelector("#teachersTable tbody");
+    tableBody.innerHTML = ""; // Clear existing rows
+
+    teachers.forEach(teacher => {
+        const row = document.createElement("tr");
+
+        Object.values(teacher).forEach(text => {
+            const cell = document.createElement("td");
+            cell.textContent = text;
+            row.appendChild(cell);
+        });
+
+        tableBody.appendChild(row);
+    });
+}
+
+function searchTeachers() {
+    const input = document.getElementById("search");
+    const filter = input.value.toUpperCase();
+    const table = document.getElementById("teachersTable");
+    const tr = table.getElementsByTagName("tr");
+
+    for (let i = 1; i < tr.length; i++) {
+        const td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+            const txtValue = td.textContent || td.innerText;
+            tr[i].style.display = txtValue.toUpperCase().indexOf(filter) > -1 ? "" : "none";
+        }
+    }
+}
     
        </script>
    
